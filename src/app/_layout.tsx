@@ -1,24 +1,38 @@
-import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider,
-} from "@react-navigation/native";
 import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
+import { Slot } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import { useEffect } from "react";
-import { SafeAreaView, StatusBar, StyleSheet, Text } from "react-native";
+import {
+  ActivityIndicator,
+  SafeAreaView,
+  StatusBar,
+  StyleSheet,
+} from "react-native";
 import "react-native-reanimated";
+import { ThemeProvider as RestyleProvider } from "@shopify/restyle";
+import { PaperProvider } from "react-native-paper";
+import theme from "@/src/theme";
 
 const STATUS_BAR_HEIGHT = StatusBar.currentHeight || 0;
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
+const Routes = () => {
+  const isLoading = true;
+
+  if (isLoading) {
+    return <ActivityIndicator />;
+  }
+
+  return <Slot />;
+};
+
 export default function RootLayout() {
   const [loaded] = useFonts({
-    SpaceMono: require("../../assets/fonts/SpaceMono-Regular.ttf"),
+    Montserrat: require("../../assets/fonts/Montserrat-VariableFont_wght.ttf"),
+    MontserratItalic: require("../../assets/fonts/Montserrat-Italic-VariableFont_wght.ttf"),
   });
 
   useEffect(() => {
@@ -33,8 +47,12 @@ export default function RootLayout() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text>Hadouken</Text>
-      <ExpoStatusBar style="dark" />
+      <RestyleProvider theme={theme}>
+        <PaperProvider>
+          <Routes />
+        </PaperProvider>
+      </RestyleProvider>
+      <ExpoStatusBar style="dark" backgroundColor={theme.colors.white} />
     </SafeAreaView>
   );
 }
@@ -43,6 +61,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: STATUS_BAR_HEIGHT,
-    backgroundColor: "red",
+    backgroundColor: theme.colors.white,
   },
 });
