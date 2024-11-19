@@ -3,16 +3,12 @@ import { Slot } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import { useEffect } from "react";
-import {
-  ActivityIndicator,
-  SafeAreaView,
-  StatusBar,
-  StyleSheet,
-} from "react-native";
+import { SafeAreaView, StatusBar, StyleSheet } from "react-native";
 import "react-native-reanimated";
 import { ThemeProvider as RestyleProvider } from "@shopify/restyle";
-import { PaperProvider } from "react-native-paper";
+import { ActivityIndicator, PaperProvider } from "react-native-paper";
 import theme from "@/src/theme";
+import { Box } from "@/src/app/(modules)/(common)/components";
 
 const STATUS_BAR_HEIGHT = StatusBar.currentHeight || 0;
 
@@ -23,7 +19,11 @@ const Routes = () => {
   const isLoading = true;
 
   if (isLoading) {
-    return <ActivityIndicator />;
+    return (
+      <Box alignItems="center" height="100%" justifyContent="center">
+        <ActivityIndicator size="large" color={theme.colors.main700} />
+      </Box>
+    );
   }
 
   return <Slot />;
