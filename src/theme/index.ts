@@ -38,9 +38,8 @@ const theme = createTheme({
   },
   textVariants: {
     header: {
-      fontFamily: "Montserrat",
+      fontFamily: "Montserrat-Bold",
       fontSize: 24,
-      color: "white",
     },
     headerBlack: {
       fontFamily: "Montserrat",

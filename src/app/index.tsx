@@ -2,7 +2,6 @@ import React from "react";
 // Components
 import { Box } from "@/src/app/(modules)/(common)/components";
 import { ActivityIndicator } from "react-native-paper";
-import { StyleSheet } from "react-native";
 // Theme
 import theme from "@/src/theme";
 
