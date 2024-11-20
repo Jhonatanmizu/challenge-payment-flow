@@ -6,21 +6,23 @@ import { createShadow } from "@/src/app/(modules)/(common)/utils";
 import { StyleSheet, TouchableOpacity } from "react-native";
 // Theme
 import theme from "@/src/theme";
+import { useTranslation } from "react-i18next";
 
 interface Props {
-  brand: string;
+  cardBrand: string;
   cardNumber: string;
 }
 
-const PaymentOption = ({ brand, cardNumber }: Props) => {
+const PaymentOption = ({ cardBrand, cardNumber }: Props) => {
+  const { t } = useTranslation();
   return (
     <TouchableOpacity style={styles.wrapper}>
       <Box rowGap="sm">
         <Text variant="headerBlack" color="main700" fontWeight="700">
-          Cartão Visa
+          {t("common.card")} {cardBrand}
         </Text>
         <Text variant="descriptionBlack" fontWeight="600">
-          Final ***1234
+          {t("common.end")} {cardNumber}
         </Text>
       </Box>
     </TouchableOpacity>

@@ -1,14 +1,15 @@
 import { useFonts } from "expo-font";
-import { Slot, useRouter, useSegments } from "expo-router";
+import { Slot, useRouter } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import { SafeAreaView, StatusBar, StyleSheet } from "react-native";
 import "react-native-reanimated";
 import { ThemeProvider as RestyleProvider } from "@shopify/restyle";
-import { ActivityIndicator, PaperProvider } from "react-native-paper";
+import { PaperProvider } from "react-native-paper";
 import theme from "@/src/theme";
-import { Box } from "@/src/app/(modules)/(common)/components";
+
+import "@/src/app/(modules)/(common)/i18n"; // i18n configuration
 
 const STATUS_BAR_HEIGHT = StatusBar.currentHeight || 0;
 
