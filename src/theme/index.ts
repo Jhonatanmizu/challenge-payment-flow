@@ -8,6 +8,7 @@ const palette = {
   grey700: "#3b4443",
   grey100: "#f7f7f7",
   main100: "#e5fffe",
+  grey400: "#909090",
   blackAlt: "#252525",
   black: "#000000",
 };
@@ -17,7 +18,7 @@ const theme = createTheme({
     mainBackground: palette.main100,
     backgroundContrast: palette.grey700,
     main800: palette.main800,
-    main700: palette.main800,
+    main700: palette.main700,
     grey800: palette.grey800,
     grey700: palette.grey700,
     grey100: palette.grey100,
@@ -25,6 +26,7 @@ const theme = createTheme({
     blackAlt: palette.blackAlt,
     white: palette.white,
     black: palette.black,
+    grey400: palette.grey400,
   },
   spacing: {
     xs: 8,

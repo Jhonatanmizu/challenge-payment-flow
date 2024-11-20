@@ -1,3 +1,5 @@
+import { ImageSourcePropType } from "react-native";
+
 export interface ICard {
   cardId: string;
   name: string;
@@ -8,4 +10,5 @@ export interface ICard {
   brand: string;
   favorite: boolean;
   used: boolean;
+  brandImage: ImageSourcePropType;
 }
