@@ -1,4 +1,5 @@
 import { IReceiver } from "./receiver";
+import { ISimulation } from "./simulation";
 
 export interface IPayment {
   transactionId: string;
