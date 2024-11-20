@@ -1,14 +1,29 @@
-import React from "react";
+import React, { useCallback, useRef } from "react";
+import { useFocusEffect } from "expo-router";
 // Components
 import { Box } from "@/src/app/(modules)/(common)/components";
-import { ActivityIndicator } from "react-native-paper";
 // Theme
-import theme from "@/src/theme";
+import LottieView from "lottie-react-native";
 
 const InitialScreen = () => {
+  const animation = useRef<LottieView>(null);
+  useFocusEffect(
+    useCallback(() => {
+      animation.current?.play();
+    }, [])
+  );
   return (
     <Box alignItems="center" height="100%" justifyContent="center">
-      <ActivityIndicator size="large" color={theme.colors.main700} />
+      <LottieView
+        autoPlay
+        ref={animation}
+        style={{
+          width: 200,
+          height: 200,
+        }}
+        resizeMode="cover"
+        source={require("../assets/animations/loading_animation.json")}
+      />
     </Box>
   );
 };

@@ -5,12 +5,18 @@ import { Box, Text } from "../(common)/components";
 import LottieView from "lottie-react-native";
 import * as Animatable from "react-native-animatable";
 import { useTranslation } from "react-i18next";
+import { useRouter } from "expo-router";
 
 const PaymentProcessing = () => {
   const { t } = useTranslation();
+  const router = useRouter();
+
   const animation = useRef<LottieView>(null);
   useEffect(() => {
     animation.current?.play();
+    setTimeout(() => {
+      router.push("/(modules)/(payment)/payment-success");
+    }, 2000);
   }, []);
   return (
     <Box

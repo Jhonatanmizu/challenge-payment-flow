@@ -10,17 +10,15 @@ const mockedPayment: IPayment = {
     id: "45648941",
   },
   method: "credit_card",
-  simulation: [
-    {
-      amountToPay: 103.0,
-      installmentAmount: 103.0,
-      installments: 1,
-      fees: {
-        fixed: { amount: 3.0, percentage: 0.03 },
-        installments: { amount: 0.0, percentage: 0.01 },
-      },
+  simulation: {
+    amountToPay: 103.0,
+    installmentAmount: 103.0,
+    installments: 1,
+    fees: {
+      fixed: { amount: 3.0, percentage: 0.03 },
+      installments: { amount: 0.0, percentage: 0.01 },
     },
-  ],
+  },
 };
 
 interface PaymentStoreState {
@@ -31,7 +29,7 @@ interface PaymentStoreState {
 
 interface PaymentStoreAction {
   getPayment: () => Promise<IPayment>;
-  getSimulations: () => Promise<ISimulation[]>;
+  getSimulations: () => Promise<ISimulation>;
 }
 
 const initialState: PaymentStoreState = {
@@ -60,7 +58,7 @@ export const usePaymentStore = create<PaymentStoreState & PaymentStoreAction>(
     getSimulations: async () => {
       set({ isLoadingSimulations: true });
       try {
-        const result = await new Promise<ISimulation[]>((resolve) =>
+        const result = await new Promise<ISimulation>((resolve) =>
           setTimeout(() => resolve(get().payment.simulation), 5000)
         );
         return result;

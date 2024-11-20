@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from "react";
 // Components
 import {
+  AccountBalance,
   Box,
   HeaderWithGoBack,
   PaymentOption,
@@ -11,7 +12,7 @@ import { FlatList, StyleSheet, View } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 // Hooks
 import { useTranslation } from "react-i18next";
-import { useAccountStore } from "../(common)/stores";
+import { useAccountStore, usePaymentStore } from "../(common)/stores";
 import { useFocusEffect, useRouter } from "expo-router";
 // Theme
 import theme from "@/src/theme";
@@ -19,6 +20,7 @@ import { ICard } from "../(common)/types";
 import {
   actuatedNormalize,
   createShadow,
+  formatAmount,
   SCREEN_HEIGHT,
 } from "../(common)/utils";
 
@@ -26,6 +28,8 @@ const PaymentResume = () => {
   const { t } = useTranslation();
   const [selectedPaymentId, setSelectedPaymentId] = useState<string>("");
   const { getAccount, isLoadingAccount, account } = useAccountStore();
+  const { getSimulations, isLoadingSimulations, payment } = usePaymentStore();
+  const simulations = payment.simulation;
   const router = useRouter();
   const accountCards = account.cards;
 
@@ -101,6 +105,11 @@ const PaymentResume = () => {
           <Text variant="titleBlack" fontWeight="bold">
             {t("common.midway_account")}
           </Text>
+          <AccountBalance
+            accountValue={2000}
+            isPaymentSelected={selectedPaymentId === "-1"}
+            onAccountPress={() => setSelectedPaymentId("-1")}
+          />
         </View>
         <FlatList
           ListHeaderComponent={renderListHeader}
@@ -117,7 +126,7 @@ const PaymentResume = () => {
             {t("payment.value_to_be_paid")}
           </Text>
           <Text variant="titleBlack" fontWeight="bold">
-            R$ 100,00
+            {formatAmount(payment.amount)}
           </Text>
         </Box>
         <RoundedButton

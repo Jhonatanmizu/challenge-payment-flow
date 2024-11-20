@@ -4,3 +4,4 @@ export { PaymentOption } from "./PaymentOption";
 export { RoundedButton } from "./RoundedButton";
 export { HeaderWithGoBack } from "./HeaderWithGoBack";
 export { RadioButton } from "./RadioButton";
+export { AccountBalance } from "./AccountBalance";

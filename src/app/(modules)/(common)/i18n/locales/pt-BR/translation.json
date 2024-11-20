@@ -11,6 +11,8 @@
     "credit_cards": "Cartões de crédito",
     "midway_account": "Conta Midway",
     "processing": "Processando",
-    "your_transfer": "sua transferência"
+    "your_transfer": "sua transferência",
+    "account_balance": "Saldo em conta",
+    "available": "Disponível"
   }
 }
