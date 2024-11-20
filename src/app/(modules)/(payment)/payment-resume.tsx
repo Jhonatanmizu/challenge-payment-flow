@@ -4,6 +4,7 @@ import React, { useCallback } from "react";
 import { FlashList } from "@shopify/flash-list";
 import {
   Box,
+  HeaderWithGoBack,
   PaymentOption,
   RoundedButton,
   Text,
@@ -23,8 +24,6 @@ import {
   SCREEN_HEIGHT,
 } from "../(common)/utils";
 
-const PAYMENT_OPTIONS = {};
-
 const PaymentResume = () => {
   const { t } = useTranslation();
   const { getAccount, isLoadingAccount, account } = useAccountStore();
@@ -34,7 +33,7 @@ const PaymentResume = () => {
     return (
       <Box alignItems="center" justifyContent="center" m="3xl">
         <Text variant="titleBlack" fontWeight="700">
-          Cartões de crédito
+          {t("common.credit_cards")}
         </Text>
       </Box>
     );
@@ -72,7 +71,8 @@ const PaymentResume = () => {
 
   return (
     <View style={styles.container}>
-      <View style={{ flex: 1 }}>
+      <HeaderWithGoBack />
+      <View style={styles.wrapper}>
         <View style={styles.contentWrapper}>
           <Text variant="headerBlack" fontWeight="900">
             {t("payment.pix_transfer")}
@@ -93,13 +93,13 @@ const PaymentResume = () => {
       <View style={styles.bottomContainer}>
         <Box>
           <Text variant="descriptionBlack" fontWeight="600">
-            Valor a ser pago
+            {t("payment.value_to_be_paid")}
           </Text>
           <Text variant="titleBlack" fontWeight="bold">
             R$ 100,00
           </Text>
         </Box>
-        <RoundedButton label="Pagar" disabled />
+        <RoundedButton label={t("common.pay")} disabled />
       </View>
     </View>
   );
@@ -111,6 +111,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.colors.white,
+  },
+  wrapper: {
+    flex: 1,
   },
   contentWrapper: {
     rowGap: actuatedNormalize(16),

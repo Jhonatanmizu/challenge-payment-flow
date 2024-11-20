@@ -1,10 +1,13 @@
 {
   "payment": {
     "pix_transfer": "Transferência Pix",
-    "choose_payment_method": "Escolha uma forma de pagamento"
+    "choose_payment_method": "Escolha uma forma de pagamento",
+    "value_to_be_paid": "Valor a ser pago"
   },
   "common": {
     "card": "Cartão",
-    "end": "Final"
+    "end": "Final",
+    "pay": "Pagar",
+    "credit_cards": "Cartões de crédito"
   }
 }
