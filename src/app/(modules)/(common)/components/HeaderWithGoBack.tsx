@@ -34,11 +34,11 @@ export { HeaderWithGoBack };
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    padding: 16,
+    padding: 8,
     alignItems: "center",
   },
   buttonWrapper: {
-    padding: 12,
+    padding: 8,
     borderRadius: 30,
     backgroundColor: theme.colors.main100,
     alignItems: "center",
