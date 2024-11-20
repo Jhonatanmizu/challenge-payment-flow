@@ -12,27 +12,44 @@ import {
 // Theme
 import theme from "@/src/theme";
 import { useTranslation } from "react-i18next";
+import { RadioButton } from "react-native-paper";
 
 interface Props {
   cardBrand: string;
   cardNumber: string;
   cardBrandImage: ImageSourcePropType;
+  isPaymentSelected: boolean;
+  onPaymentPress: () => void;
 }
 
-const PaymentOption = ({ cardBrand, cardNumber, cardBrandImage }: Props) => {
+const PaymentOption = ({
+  cardBrand,
+  cardNumber,
+  cardBrandImage,
+  isPaymentSelected,
+  onPaymentPress,
+}: Props) => {
   const { t } = useTranslation();
   return (
-    <TouchableOpacity style={styles.wrapper}>
-      <Box rowGap="sm">
-        <Box flexDirection="row" alignItems="center" gap="sm">
-          <Image source={cardBrandImage} resizeMode="cover" />
-          <Text variant="titleBlack" color="main700" fontWeight="700">
-            {t("common.card")} {cardBrand}
+    <TouchableOpacity style={styles.wrapper} onPress={onPaymentPress}>
+      <Box rowGap="sm" flexDirection="row" alignItems="center">
+        <RadioButton
+          value={cardBrand}
+          color={theme.colors.main700}
+          status={isPaymentSelected ? "checked" : "unchecked"}
+          onPress={onPaymentPress}
+        />
+        <Box>
+          <Box flexDirection="row" alignItems="center" gap="sm">
+            <Image source={cardBrandImage} resizeMode="cover" />
+            <Text variant="titleBlack" color="main700" fontWeight="700">
+              {t("common.card")} {cardBrand}
+            </Text>
+          </Box>
+          <Text variant="descriptionBlack" fontWeight="600">
+            {t("common.end")} {cardNumber}
           </Text>
         </Box>
-        <Text variant="descriptionBlack" fontWeight="600">
-          {t("common.end")} {cardNumber}
-        </Text>
       </Box>
     </TouchableOpacity>
   );
@@ -47,5 +64,7 @@ const styles = StyleSheet.create({
     padding: 12,
     paddingHorizontal: 16,
     borderRadius: 8,
+    flexDirection: "row",
+    alignItems: "center",
   },
 });

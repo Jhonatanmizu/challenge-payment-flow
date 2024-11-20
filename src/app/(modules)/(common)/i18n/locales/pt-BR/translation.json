@@ -8,6 +8,9 @@
     "card": "Cartão",
     "end": "Final",
     "pay": "Pagar",
-    "credit_cards": "Cartões de crédito"
+    "credit_cards": "Cartões de crédito",
+    "midway_account": "Conta Midway",
+    "processing": "Processando",
+    "your_transfer": "sua transferência"
   }
 }

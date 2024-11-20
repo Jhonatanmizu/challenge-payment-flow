@@ -1,7 +1,5 @@
-import React, { useCallback } from "react";
-
+import React, { useCallback, useState } from "react";
 // Components
-import { FlashList } from "@shopify/flash-list";
 import {
   Box,
   HeaderWithGoBack,
@@ -9,12 +7,12 @@ import {
   RoundedButton,
   Text,
 } from "@/src/app/(modules)/(common)/components";
-import { StyleSheet, View } from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 // Hooks
 import { useTranslation } from "react-i18next";
 import { useAccountStore } from "../(common)/stores";
-import { useFocusEffect } from "expo-router";
+import { useFocusEffect, useRouter } from "expo-router";
 // Theme
 import theme from "@/src/theme";
 import { ICard } from "../(common)/types";
@@ -26,7 +24,9 @@ import {
 
 const PaymentResume = () => {
   const { t } = useTranslation();
+  const [selectedPaymentId, setSelectedPaymentId] = useState<string>("");
   const { getAccount, isLoadingAccount, account } = useAccountStore();
+  const router = useRouter();
   const accountCards = account.cards;
 
   const renderListHeader = useCallback(() => {
@@ -41,29 +41,45 @@ const PaymentResume = () => {
 
   const renderCardItem = useCallback(
     ({ item }: { item: ICard; index: number }) => {
+      const isSelected = item.cardId === selectedPaymentId;
       const cardBrand = item.brand;
       const cardNumber = item.cardNumber;
       const cardBrandImage = item.brandImage;
       return (
         <PaymentOption
+          isPaymentSelected={isSelected}
+          onPaymentPress={() => handleSelectPayment(item.cardId)}
           cardBrandImage={cardBrandImage}
           cardNumber={cardNumber}
           cardBrand={cardBrand}
         />
       );
     },
-    [isLoadingAccount, accountCards.length]
+    [isLoadingAccount, accountCards.length, selectedPaymentId]
   );
 
   const renderSeparator = useCallback(() => {
     return <Box height={16} />;
   }, []);
 
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     getAccount();
-  //   }, [])
-  // );
+  const handleSelectPayment = (paymentId: string) => {
+    const isAlreadySelected = paymentId === selectedPaymentId;
+    if (!isAlreadySelected) {
+      return setSelectedPaymentId(paymentId);
+    }
+
+    setSelectedPaymentId("");
+  };
+
+  const handleProcessPayment = () => {
+    router.push("/(modules)/(payment)/payment-processing");
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      getAccount();
+    }, [])
+  );
 
   if (isLoadingAccount) {
     return <ActivityIndicator color={theme.colors.backgroundContrast} />;
@@ -81,13 +97,18 @@ const PaymentResume = () => {
             {t("payment.choose_payment_method")}
           </Text>
         </View>
-        <FlashList
+        <View style={styles.contentWrapper}>
+          <Text variant="titleBlack" fontWeight="bold">
+            {t("common.midway_account")}
+          </Text>
+        </View>
+        <FlatList
           ListHeaderComponent={renderListHeader}
           data={accountCards}
           renderItem={renderCardItem}
-          estimatedItemSize={92}
           contentContainerStyle={styles.cardList}
           ItemSeparatorComponent={renderSeparator}
+          keyExtractor={(item) => item.cardId}
         />
       </View>
       <View style={styles.bottomContainer}>
@@ -99,7 +120,11 @@ const PaymentResume = () => {
             R$ 100,00
           </Text>
         </Box>
-        <RoundedButton label={t("common.pay")} disabled />
+        <RoundedButton
+          label={t("common.pay")}
+          disabled={!selectedPaymentId}
+          onPress={handleProcessPayment}
+        />
       </View>
     </View>
   );
