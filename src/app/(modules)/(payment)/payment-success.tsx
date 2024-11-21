@@ -6,12 +6,16 @@ import { Image, StyleSheet } from "react-native";
 import { useTranslation } from "react-i18next";
 // Utils
 import { formatDateToLocaleBrazil } from "../(common)/utils";
+import { useRouter } from "expo-router";
 
 const PaymentSuccess = () => {
   const { t } = useTranslation();
+  const router = useRouter();
   const paymentDate = formatDateToLocaleBrazil(new Date(Date.now()));
 
-  const handleClose = () => {};
+  const handleClose = () => {
+    router.push("/(modules)/(payment)/payment-resume");
+  };
 
   return (
     <Box height="100%" backgroundColor="white" padding="lg">

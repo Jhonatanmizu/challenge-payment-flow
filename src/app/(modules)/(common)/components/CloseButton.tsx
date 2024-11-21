@@ -12,7 +12,7 @@ interface Props {
 
 const CloseButton = ({ onClosePress }: Props) => {
   return (
-    <TouchableOpacity style={styles.button}>
+    <TouchableOpacity style={styles.button} onPress={onClosePress}>
       <Ionicons name="close" size={24} />
     </TouchableOpacity>
   );
