@@ -2,7 +2,8 @@
   "payment": {
     "pix_transfer": "Transferência Pix",
     "choose_payment_method": "Escolha uma forma de pagamento",
-    "value_to_be_paid": "Valor a ser pago"
+    "value_to_be_paid": "Valor a ser pago",
+    "pix_transfer_done_with": "Pix realizado com"
   },
   "common": {
     "card": "Cartão",
@@ -13,6 +14,10 @@
     "processing": "Processando",
     "your_transfer": "sua transferência",
     "account_balance": "Saldo em conta",
-    "available": "Disponível"
+    "available": "Disponível",
+    "success": "sucesso",
+    "to": "Para",
+    "value": "Valor",
+    "date": "Data"
   }
 }
