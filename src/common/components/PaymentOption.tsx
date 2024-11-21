@@ -2,7 +2,8 @@ import React from "react";
 // Components
 import { Box } from "./Box";
 import { Text } from "./Text";
-import { createShadow } from "@/src/common/utils";
+import { RadioButton } from "react-native-paper";
+import { PickInstallments } from "./PickInstallments";
 import {
   Image,
   ImageSourcePropType,
@@ -11,9 +12,10 @@ import {
 } from "react-native";
 // Theme
 import theme from "@/src/theme";
+// i18n
 import { useTranslation } from "react-i18next";
-import { RadioButton } from "react-native-paper";
-import { PickInstallments } from "./PickInstallments";
+// Utils
+import { actuatedNormalize, createShadow } from "@/src/common/utils";
 
 interface Props {
   cardBrand: string;
@@ -69,9 +71,9 @@ const styles = StyleSheet.create({
   wrapper: {
     ...createShadow(3),
     backgroundColor: theme.colors.whiteAlt,
-    padding: 12,
-    paddingHorizontal: 16,
-    borderRadius: 8,
+    padding: actuatedNormalize(12),
+    paddingHorizontal: actuatedNormalize(16),
+    borderRadius: actuatedNormalize(8),
     flexDirection: "row",
     alignItems: "center",
   },

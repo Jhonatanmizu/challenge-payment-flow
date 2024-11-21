@@ -7,6 +7,8 @@ import { Ionicons } from "@expo/vector-icons";
 import theme from "@/src/theme";
 // Hooks
 import { useNavigation } from "expo-router";
+// Utils
+import { actuatedNormalize } from "../utils";
 
 const HeaderWithGoBack = () => {
   const navigation = useNavigation();
@@ -34,12 +36,12 @@ export { HeaderWithGoBack };
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    padding: 8,
+    padding: actuatedNormalize(8),
     alignItems: "center",
   },
   buttonWrapper: {
-    padding: 8,
-    borderRadius: 30,
+    padding: actuatedNormalize(8),
+    borderRadius: actuatedNormalize(30),
     backgroundColor: theme.colors.main100,
     alignItems: "center",
     justifyContent: "center",

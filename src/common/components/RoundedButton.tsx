@@ -9,6 +9,7 @@ import {
 import { Text } from "./Text";
 // Theme
 import theme from "@/src/theme";
+import { actuatedNormalize } from "../utils";
 
 interface Props {
   label: string;
@@ -33,15 +34,15 @@ export { RoundedButton };
 
 const styles = StyleSheet.create({
   button: {
-    paddingVertical: 7,
-    paddingHorizontal: 16,
+    paddingVertical: actuatedNormalize(7),
+    paddingHorizontal: actuatedNormalize(16),
     backgroundColor: theme.colors.main700,
-    borderRadius: 30,
+    borderRadius: actuatedNormalize(30),
   },
   buttonDisable: {
-    paddingVertical: 7,
-    paddingHorizontal: 16,
+    paddingVertical: actuatedNormalize(7),
+    paddingHorizontal: actuatedNormalize(16),
     backgroundColor: theme.colors.grey400,
-    borderRadius: 30,
+    borderRadius: actuatedNormalize(30),
   },
 });

@@ -1,10 +1,14 @@
-import { StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
-import { createShadow, formatAmount } from "../utils";
-import theme from "@/src/theme";
+// Components
 import { Box } from "./Box";
 import { RadioButton } from "react-native-paper";
 import { Text } from "./Text";
+import { StyleSheet, TouchableOpacity } from "react-native";
+// Utils
+import { actuatedNormalize, createShadow, formatAmount } from "../utils";
+// Theme
+import theme from "@/src/theme";
+// i18n
 import { useTranslation } from "react-i18next";
 
 interface Props {
@@ -44,9 +48,9 @@ const styles = StyleSheet.create({
   wrapper: {
     ...createShadow(3),
     backgroundColor: theme.colors.whiteAlt,
-    padding: 12,
-    paddingHorizontal: 16,
-    borderRadius: 8,
+    padding: actuatedNormalize(12),
+    paddingHorizontal: actuatedNormalize(16),
+    borderRadius: actuatedNormalize(8),
     flexDirection: "row",
     alignItems: "center",
   },

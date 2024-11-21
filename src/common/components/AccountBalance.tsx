@@ -2,7 +2,11 @@ import React from "react";
 // Components
 import { Box } from "./Box";
 import { Text } from "./Text";
-import { createShadow, formatAmount } from "@/src/common/utils";
+import {
+  actuatedNormalize,
+  createShadow,
+  formatAmount,
+} from "@/src/common/utils";
 import { StyleSheet, TouchableOpacity } from "react-native";
 // Theme
 import theme from "@/src/theme";
@@ -49,9 +53,9 @@ const styles = StyleSheet.create({
   wrapper: {
     ...createShadow(10),
     backgroundColor: theme.colors.grey100,
-    padding: 12,
-    paddingHorizontal: 16,
-    borderRadius: 8,
+    padding: actuatedNormalize(12),
+    paddingHorizontal: actuatedNormalize(16),
+    borderRadius: actuatedNormalize(8),
     flexDirection: "row",
     alignItems: "center",
   },

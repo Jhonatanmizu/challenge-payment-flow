@@ -63,8 +63,8 @@ export { PickInstallments };
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    padding: 8,
-    height: 48,
+    padding: actuatedNormalize(8),
+    height: actuatedNormalize(48),
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
@@ -73,8 +73,8 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     width: "100%",
-    padding: 8,
-    height: 48,
+    padding: actuatedNormalize(8),
+    height: actuatedNormalize(48),
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
