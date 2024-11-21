@@ -8,6 +8,7 @@ import "react-native-reanimated";
 import { ThemeProvider as RestyleProvider } from "@shopify/restyle";
 import { PaperProvider } from "react-native-paper";
 import theme from "@/src/theme";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import "@/src/common/i18n"; // i18n configuration
 
@@ -51,7 +52,9 @@ export default function RootLayout() {
     <SafeAreaView style={styles.container}>
       <RestyleProvider theme={theme}>
         <PaperProvider>
-          <Routes />
+          <GestureHandlerRootView>
+            <Routes />
+          </GestureHandlerRootView>
         </PaperProvider>
       </RestyleProvider>
       <ExpoStatusBar style="dark" backgroundColor={theme.colors.white} />

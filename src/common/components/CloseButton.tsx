@@ -22,6 +22,7 @@ export { CloseButton };
 
 const styles = StyleSheet.create({
   button: {
+    width: "auto",
     padding: 8,
     borderRadius: 30,
     backgroundColor: theme.colors.main100,

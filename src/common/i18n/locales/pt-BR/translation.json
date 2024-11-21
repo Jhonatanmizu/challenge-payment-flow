@@ -3,7 +3,8 @@
     "pix_transfer": "Transferência Pix",
     "choose_payment_method": "Escolha uma forma de pagamento",
     "value_to_be_paid": "Valor a ser pago",
-    "pix_transfer_done_with": "Pix realizado com"
+    "pix_transfer_done_with": "Pix realizado com",
+    "payment_installments": "Parcelas do pagamento"
   },
   "common": {
     "card": "Cartão",
@@ -19,6 +20,7 @@
     "to": "Para",
     "value": "Valor",
     "date": "Data",
-    "pick_installments": "Escolher parcelas"
+    "pick_installments": "Escolher parcelas",
+    "confirm": "Confirmar"
   }
 }

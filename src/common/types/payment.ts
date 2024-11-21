@@ -7,5 +7,5 @@ export interface IPayment {
   currency: string;
   receiver: IReceiver;
   method: "credit_card" | "debit_card" | "bank_transfer" | "cash";
-  simulation: ISimulation;
+  simulation: ISimulation[];
 }

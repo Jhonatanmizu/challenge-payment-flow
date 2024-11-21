@@ -32,18 +32,6 @@ const mockedAccount: IAccount = {
       used: true,
       brandImage: require("../../assets/master_card_brand.png"),
     },
-    {
-      cardId: "3",
-      name: "Platinum",
-      securityCode: "***",
-      cardNumber: "****181",
-      holder: "John Doer",
-      expirationDate: "12/2025",
-      brand: "Itau",
-      favorite: true,
-      used: true,
-      brandImage: require("../../assets/master_card_brand.png"),
-    },
   ],
 };
 

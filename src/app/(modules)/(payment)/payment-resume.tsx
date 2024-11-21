@@ -1,22 +1,30 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useMemo, useRef, useState } from "react";
 // Components
 import {
   AccountBalance,
   Box,
+  CloseButton,
   HeaderWithGoBack,
+  InstallmentOption,
   PaymentOption,
+  PaymentOptionList,
   RoundedButton,
   Text,
 } from "@/src/common/components";
 import { FlatList, ScrollView, StyleSheet, View } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
+import BottomSheet, {
+  BottomSheetFlashList,
+  BottomSheetFlatList,
+  BottomSheetView,
+} from "@gorhom/bottom-sheet";
 // Hooks
 import { useTranslation } from "react-i18next";
 import { useAccountStore, usePaymentStore } from "@/src/common/stores";
 import { useFocusEffect, useRouter } from "expo-router";
 // Theme
 import theme from "@/src/theme";
-import { ICard } from "@/src/common/types";
+import { ICard, ISimulation } from "@/src/common/types";
 import {
   actuatedNormalize,
   createShadow,
@@ -25,15 +33,33 @@ import {
 } from "@/src/common/utils";
 
 const PaymentResume = () => {
+  const bottomSheetRef = useRef<BottomSheet>(null);
   const { t } = useTranslation();
-  const [selectedPaymentId, setSelectedPaymentId] = useState<string>("");
   const { getAccount, isLoadingAccount, account } = useAccountStore();
   const { getSimulations, isLoadingSimulations, payment } = usePaymentStore();
   const simulations = payment.simulation;
   const router = useRouter();
   const accountCards = account.cards;
+  const [selectedPaymentId, setSelectedPaymentId] = useState<string>("");
+  const [installmentSelectedAmount, setInstallmentSelectedAmount] = useState<
+    number | null
+  >(null);
+  const simulationResult = useMemo(() => {
+    if (!installmentSelectedAmount) return null;
+    return simulations.find(
+      (s) => s.installments === installmentSelectedAmount
+    );
+  }, [installmentSelectedAmount]);
 
-  const handlePickInstallments = () => {};
+  const bottomSheetSnapPoints = useMemo(() => ["25%", "50%", "90%"], []);
+
+  const handlePickInstallments = () => {
+    bottomSheetRef.current?.expand();
+  };
+
+  const handleCloseBottomSheet = () => {
+    bottomSheetRef.current?.close();
+  };
 
   const handleSelectPayment = (paymentId: string) => {
     const isAlreadySelected = paymentId === selectedPaymentId;
@@ -48,39 +74,70 @@ const PaymentResume = () => {
     router.push("/(modules)/(payment)/payment-processing");
   };
 
-  const renderListHeader = useCallback(() => {
+  const handleSelectSimulation = (simulation: ISimulation) => {
+    setInstallmentSelectedAmount(simulation.installments);
+  };
+
+  const renderBottomSheetHeader = useCallback(() => {
     return (
-      <Box alignItems="center" justifyContent="center" m="3xl">
-        <Text variant="titleBlack" fontWeight="700">
-          {t("common.credit_cards")}
+      <Box
+        flexDirection="row"
+        alignItems="center"
+        justifyContent="space-between"
+        mb="xl"
+      >
+        <Text variant="titleBlack" fontWeight="bold">
+          {t("payment.payment_installments")}
         </Text>
+        <CloseButton onClosePress={handleCloseBottomSheet} />
       </Box>
     );
   }, []);
 
-  const renderCardItem = useCallback(
-    ({ item }: { item: ICard; index: number }) => {
-      const isSelected = item.cardId === selectedPaymentId;
-      const cardBrand = item.brand;
-      const cardNumber = item.cardNumber;
-      const cardBrandImage = item.brandImage;
+  const renderInstallmentItem = useCallback(
+    ({ item }: { item: ISimulation }) => {
+      const installmentAmount = item.installmentAmount;
+      const installments = item.installments;
+      const isSelected = installmentSelectedAmount === installments;
       return (
-        <PaymentOption
-          isPaymentSelected={isSelected}
-          onPaymentPress={() => handleSelectPayment(item.cardId)}
-          onPickInstallments={handlePickInstallments}
-          cardBrandImage={cardBrandImage}
-          cardNumber={cardNumber}
-          cardBrand={cardBrand}
+        <InstallmentOption
+          installments={installments}
+          installmentAmount={installmentAmount}
+          isInstallmentSelected={isSelected}
+          onPickInstallment={() => handleSelectSimulation(item)}
         />
       );
     },
-    [isLoadingAccount, accountCards.length, selectedPaymentId]
+    [installmentSelectedAmount]
   );
 
-  const renderSeparator = useCallback(() => {
-    return <Box height={16} />;
-  }, []);
+  const renderAmountToPay = useCallback(() => {
+    return (
+      <>
+        {!!simulationResult ? (
+          <>
+            <Text variant="descriptionBlack" fontWeight="600">
+              {t("payment.value_to_be_paid")}
+            </Text>
+            <Text variant="titleBlack" fontWeight="bold">
+              {`${simulationResult?.installments}x de ${formatAmount(
+                simulationResult?.installmentAmount || 0
+              )}`}
+            </Text>
+          </>
+        ) : (
+          <>
+            <Text variant="descriptionBlack" fontWeight="600">
+              {t("payment.value_to_be_paid")}
+            </Text>
+            <Text variant="titleBlack" fontWeight="bold">
+              {formatAmount(payment.amount)}
+            </Text>
+          </>
+        )}
+      </>
+    );
+  }, [installmentSelectedAmount, selectedPaymentId]);
 
   // useFocusEffect(
   //   useCallback(() => {
@@ -114,31 +171,50 @@ const PaymentResume = () => {
             onAccountPress={() => setSelectedPaymentId("-1")}
           />
         </View>
-        <FlatList
-          scrollEnabled={false}
-          ListHeaderComponent={renderListHeader}
-          data={accountCards}
-          renderItem={renderCardItem}
-          contentContainerStyle={styles.cardList}
-          ItemSeparatorComponent={renderSeparator}
-          keyExtractor={(item) => item.cardId}
+
+        <PaymentOptionList
+          items={accountCards}
+          handlePickInstallments={handlePickInstallments}
+          handleSelectPayment={handleSelectPayment}
+          isLoading={isLoadingAccount}
+          selectedPaymentId={selectedPaymentId}
         />
       </ScrollView>
       <View style={styles.bottomContainer}>
-        <Box>
-          <Text variant="descriptionBlack" fontWeight="600">
-            {t("payment.value_to_be_paid")}
-          </Text>
-          <Text variant="titleBlack" fontWeight="bold">
-            {formatAmount(payment.amount)}
-          </Text>
-        </Box>
+        <Box>{renderAmountToPay()}</Box>
         <RoundedButton
           label={t("common.pay")}
           disabled={!selectedPaymentId}
           onPress={handleProcessPayment}
         />
       </View>
+      {/* <BottomSheet
+        index={-1}
+        ref={bottomSheetRef}
+        enablePanDownToClose
+        snapPoints={bottomSheetSnapPoints}
+      >
+        <BottomSheetView style={styles.bottomSheetContent}>
+          <BottomSheetFlashList
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{
+              padding: 8,
+            }}
+            estimatedItemSize={74}
+            ListHeaderComponent={renderBottomSheetHeader}
+            data={simulations}
+            ItemSeparatorComponent={renderSeparator}
+            renderItem={renderInstallmentItem}
+          />
+        </BottomSheetView>
+        <View style={styles.bottomContainer}>
+          <Box>{renderAmountToPay()}</Box>
+          <RoundedButton
+            label={t("common.confirm")}
+            onPress={handleCloseBottomSheet}
+          />
+        </View>
+      </BottomSheet> */}
     </View>
   );
 };
@@ -169,5 +245,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     ...createShadow(20),
     justifyContent: "space-between",
+  },
+
+  bottomSheetContent: {
+    padding: 16,
+    justifyContent: "space-between",
+    flex: 1,
   },
 });
