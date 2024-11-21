@@ -18,6 +18,7 @@
     "success": "sucesso",
     "to": "Para",
     "value": "Valor",
-    "date": "Data"
+    "date": "Data",
+    "pick_installments": "Escolher parcelas"
   }
 }

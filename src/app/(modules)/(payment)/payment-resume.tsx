@@ -8,7 +8,7 @@ import {
   RoundedButton,
   Text,
 } from "@/src/app/(modules)/(common)/components";
-import { FlatList, StyleSheet, View } from "react-native";
+import { FlatList, ScrollView, StyleSheet, View } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 // Hooks
 import { useTranslation } from "react-i18next";
@@ -33,6 +33,21 @@ const PaymentResume = () => {
   const router = useRouter();
   const accountCards = account.cards;
 
+  const handlePickInstallments = () => {};
+
+  const handleSelectPayment = (paymentId: string) => {
+    const isAlreadySelected = paymentId === selectedPaymentId;
+    if (!isAlreadySelected) {
+      return setSelectedPaymentId(paymentId);
+    }
+
+    setSelectedPaymentId("");
+  };
+
+  const handleProcessPayment = () => {
+    router.push("/(modules)/(payment)/payment-processing");
+  };
+
   const renderListHeader = useCallback(() => {
     return (
       <Box alignItems="center" justifyContent="center" m="3xl">
@@ -53,6 +68,7 @@ const PaymentResume = () => {
         <PaymentOption
           isPaymentSelected={isSelected}
           onPaymentPress={() => handleSelectPayment(item.cardId)}
+          onPickInstallments={handlePickInstallments}
           cardBrandImage={cardBrandImage}
           cardNumber={cardNumber}
           cardBrand={cardBrand}
@@ -66,24 +82,11 @@ const PaymentResume = () => {
     return <Box height={16} />;
   }, []);
 
-  const handleSelectPayment = (paymentId: string) => {
-    const isAlreadySelected = paymentId === selectedPaymentId;
-    if (!isAlreadySelected) {
-      return setSelectedPaymentId(paymentId);
-    }
-
-    setSelectedPaymentId("");
-  };
-
-  const handleProcessPayment = () => {
-    router.push("/(modules)/(payment)/payment-processing");
-  };
-
-  useFocusEffect(
-    useCallback(() => {
-      getAccount();
-    }, [])
-  );
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     getAccount();
+  //   }, [])
+  // );
 
   if (isLoadingAccount) {
     return <ActivityIndicator color={theme.colors.backgroundContrast} />;
@@ -92,7 +95,7 @@ const PaymentResume = () => {
   return (
     <View style={styles.container}>
       <HeaderWithGoBack />
-      <View style={styles.wrapper}>
+      <ScrollView style={styles.wrapper} showsVerticalScrollIndicator={false}>
         <View style={styles.contentWrapper}>
           <Text variant="headerBlack" fontWeight="900">
             {t("payment.pix_transfer")}
@@ -112,6 +115,7 @@ const PaymentResume = () => {
           />
         </View>
         <FlatList
+          scrollEnabled={false}
           ListHeaderComponent={renderListHeader}
           data={accountCards}
           renderItem={renderCardItem}
@@ -119,7 +123,7 @@ const PaymentResume = () => {
           ItemSeparatorComponent={renderSeparator}
           keyExtractor={(item) => item.cardId}
         />
-      </View>
+      </ScrollView>
       <View style={styles.bottomContainer}>
         <Box>
           <Text variant="descriptionBlack" fontWeight="600">
@@ -158,8 +162,8 @@ const styles = StyleSheet.create({
     paddingBottom: actuatedNormalize(120),
   },
   bottomContainer: {
-    height: SCREEN_HEIGHT * 0.12,
-    backgroundColor: theme.colors.white,
+    height: SCREEN_HEIGHT * 0.1,
+    backgroundColor: theme.colors.whiteAlt,
     padding: actuatedNormalize(16),
     alignItems: "center",
     flexDirection: "row",

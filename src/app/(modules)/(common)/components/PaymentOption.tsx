@@ -13,6 +13,7 @@ import {
 import theme from "@/src/theme";
 import { useTranslation } from "react-i18next";
 import { RadioButton } from "react-native-paper";
+import { PickInstallments } from "./PickInstallments";
 
 interface Props {
   cardBrand: string;
@@ -20,6 +21,7 @@ interface Props {
   cardBrandImage: ImageSourcePropType;
   isPaymentSelected: boolean;
   onPaymentPress: () => void;
+  onPickInstallments: () => void;
 }
 
 const PaymentOption = ({
@@ -28,30 +30,36 @@ const PaymentOption = ({
   cardBrandImage,
   isPaymentSelected,
   onPaymentPress,
+  onPickInstallments,
 }: Props) => {
   const { t } = useTranslation();
   return (
-    <TouchableOpacity style={styles.wrapper} onPress={onPaymentPress}>
-      <Box rowGap="sm" flexDirection="row" alignItems="center">
-        <RadioButton
-          value={cardBrand}
-          color={theme.colors.main700}
-          status={isPaymentSelected ? "checked" : "unchecked"}
-          onPress={onPaymentPress}
-        />
-        <Box>
-          <Box flexDirection="row" alignItems="center" gap="sm">
-            <Image source={cardBrandImage} resizeMode="cover" />
-            <Text variant="titleBlack" color="main700" fontWeight="700">
-              {t("common.card")} {cardBrand}
+    <Box rowGap="xl">
+      <TouchableOpacity style={styles.wrapper} onPress={onPaymentPress}>
+        <Box rowGap="sm" flexDirection="row" alignItems="center">
+          <RadioButton
+            value={cardBrand}
+            color={theme.colors.main700}
+            status={isPaymentSelected ? "checked" : "unchecked"}
+            onPress={onPaymentPress}
+          />
+          <Box>
+            <Box flexDirection="row" alignItems="center" gap="sm">
+              <Image source={cardBrandImage} resizeMode="cover" />
+              <Text variant="titleBlack" color="main700" fontWeight="700">
+                {t("common.card")} {cardBrand}
+              </Text>
+            </Box>
+            <Text variant="descriptionBlack" fontWeight="600">
+              {t("common.end")} {cardNumber}
             </Text>
           </Box>
-          <Text variant="descriptionBlack" fontWeight="600">
-            {t("common.end")} {cardNumber}
-          </Text>
         </Box>
-      </Box>
-    </TouchableOpacity>
+      </TouchableOpacity>
+      {isPaymentSelected && (
+        <PickInstallments onPickInstallments={onPickInstallments} />
+      )}
+    </Box>
   );
 };
 
@@ -59,8 +67,8 @@ export { PaymentOption };
 
 const styles = StyleSheet.create({
   wrapper: {
-    ...createShadow(10),
-    backgroundColor: theme.colors.grey100,
+    ...createShadow(3),
+    backgroundColor: theme.colors.whiteAlt,
     padding: 12,
     paddingHorizontal: 16,
     borderRadius: 8,
