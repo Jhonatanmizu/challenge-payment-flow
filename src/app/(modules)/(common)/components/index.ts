@@ -5,3 +5,4 @@ export { RoundedButton } from "./RoundedButton";
 export { HeaderWithGoBack } from "./HeaderWithGoBack";
 export { RadioButton } from "./RadioButton";
 export { AccountBalance } from "./AccountBalance";
+export { CloseButton } from "./CloseButton";
