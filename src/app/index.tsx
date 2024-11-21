@@ -1,7 +1,7 @@
 import React, { useCallback, useRef } from "react";
 import { useFocusEffect } from "expo-router";
 // Components
-import { Box } from "@/src/app/(modules)/(common)/components";
+import { Box } from "@/src/common/components";
 // Theme
 import LottieView from "lottie-react-native";
 

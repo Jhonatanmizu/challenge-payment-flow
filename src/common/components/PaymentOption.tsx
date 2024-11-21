@@ -2,7 +2,7 @@ import React from "react";
 // Components
 import { Box } from "./Box";
 import { Text } from "./Text";
-import { createShadow } from "@/src/app/(modules)/(common)/utils";
+import { createShadow } from "@/src/common/utils";
 import {
   Image,
   ImageSourcePropType,

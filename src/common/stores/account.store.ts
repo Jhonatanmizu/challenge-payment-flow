@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { IAccount, ICard } from "@/src/app/(modules)/(common)/types";
+import { IAccount, ICard } from "@/src/common/types";
 
 const mockedAccount: IAccount = {
   accountId: "123456789",
@@ -18,7 +18,7 @@ const mockedAccount: IAccount = {
       brand: "Visa",
       favorite: true,
       used: true,
-      brandImage: require("../../../../assets/visa_brand.png"),
+      brandImage: require("../../assets/visa_brand.png"),
     },
     {
       cardId: "2",
@@ -30,7 +30,7 @@ const mockedAccount: IAccount = {
       brand: "NuCard",
       favorite: true,
       used: true,
-      brandImage: require("../../../../assets/master_card_brand.png"),
+      brandImage: require("../../assets/master_card_brand.png"),
     },
     {
       cardId: "3",
@@ -42,7 +42,7 @@ const mockedAccount: IAccount = {
       brand: "Itau",
       favorite: true,
       used: true,
-      brandImage: require("../../../../assets/master_card_brand.png"),
+      brandImage: require("../../assets/master_card_brand.png"),
     },
   ],
 };

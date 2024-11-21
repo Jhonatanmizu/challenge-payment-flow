@@ -7,22 +7,22 @@ import {
   PaymentOption,
   RoundedButton,
   Text,
-} from "@/src/app/(modules)/(common)/components";
+} from "@/src/common/components";
 import { FlatList, ScrollView, StyleSheet, View } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 // Hooks
 import { useTranslation } from "react-i18next";
-import { useAccountStore, usePaymentStore } from "../(common)/stores";
+import { useAccountStore, usePaymentStore } from "@/src/common/stores";
 import { useFocusEffect, useRouter } from "expo-router";
 // Theme
 import theme from "@/src/theme";
-import { ICard } from "../(common)/types";
+import { ICard } from "@/src/common/types";
 import {
   actuatedNormalize,
   createShadow,
   formatAmount,
   SCREEN_HEIGHT,
-} from "../(common)/utils";
+} from "@/src/common/utils";
 
 const PaymentResume = () => {
   const { t } = useTranslation();

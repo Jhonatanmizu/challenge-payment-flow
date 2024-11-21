@@ -9,7 +9,7 @@ import { ThemeProvider as RestyleProvider } from "@shopify/restyle";
 import { PaperProvider } from "react-native-paper";
 import theme from "@/src/theme";
 
-import "@/src/app/(modules)/(common)/i18n"; // i18n configuration
+import "@/src/common/i18n"; // i18n configuration
 
 const STATUS_BAR_HEIGHT = StatusBar.currentHeight || 0;
 

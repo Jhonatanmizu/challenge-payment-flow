@@ -1,6 +1,5 @@
 import { create } from "zustand";
-import { IPayment, ISimulation } from "@/src/app/(modules)/(common)/types";
-
+import { IPayment, ISimulation } from "@/src/common/types";
 const mockedPayment: IPayment = {
   transactionId: "abc123",
   amount: 100.0,

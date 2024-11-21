@@ -2,7 +2,7 @@ import React from "react";
 // Components
 import { Box } from "./Box";
 import { Text } from "./Text";
-import { createShadow, formatAmount } from "@/src/app/(modules)/(common)/utils";
+import { createShadow, formatAmount } from "@/src/common/utils";
 import { StyleSheet, TouchableOpacity } from "react-native";
 // Theme
 import theme from "@/src/theme";

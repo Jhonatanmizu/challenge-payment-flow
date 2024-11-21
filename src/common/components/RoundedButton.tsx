@@ -6,10 +6,9 @@ import {
   TouchableOpacityProps,
   ViewStyle,
 } from "react-native";
-import { Button } from "react-native-paper";
+import { Text } from "./Text";
 // Theme
 import theme from "@/src/theme";
-import { Text } from "./Text";
 
 interface Props {
   label: string;

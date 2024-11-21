@@ -1,11 +1,11 @@
 import React from "react";
 // Components
-import { Box, CloseButton, Text } from "../(common)/components";
+import { Box, CloseButton, Text } from "@/src/common/components";
 import { Image, StyleSheet } from "react-native";
 // Translation
 import { useTranslation } from "react-i18next";
 // Utils
-import { formatDateToLocaleBrazil } from "../(common)/utils";
+import { formatDateToLocaleBrazil } from "@/src/common/utils";
 import { useRouter } from "expo-router";
 
 const PaymentSuccess = () => {

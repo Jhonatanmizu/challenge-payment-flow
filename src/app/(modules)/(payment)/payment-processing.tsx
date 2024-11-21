@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 // Components
 import { StyleSheet } from "react-native";
-import { Box, Text } from "../(common)/components";
+import { Box, Text } from "@/src/common/components";
 import LottieView from "lottie-react-native";
 import * as Animatable from "react-native-animatable";
 import { useTranslation } from "react-i18next";
