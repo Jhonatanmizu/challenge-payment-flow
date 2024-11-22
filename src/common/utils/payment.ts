@@ -1,29 +1,37 @@
-import { IFees, ISimulation } from "../types";
+import { IFees } from "../types";
 
-export function calculateFixedFee(
-  amountToPay: number,
-  fees: IFees["fixed"]
-): number {
-  return fees.amount + amountToPay * fees.percentage;
+interface PaymentDetails {
+  baseAmount: number;
+  installments: number;
+  fees: IFees;
+}
+interface PaymentResult {
+  amountToPay: number;
+  installmentAmount: number;
+  installments: number;
+  fees: IFees;
 }
 
-export function calculateInstallmentFee(
-  installmentAmount: number,
-  installments: number,
-  fees: IFees["installments"]
-): number {
-  return installments * (fees.amount + installmentAmount * fees.percentage);
-}
+export function calculatePayment(details: PaymentDetails): PaymentResult {
+  const { baseAmount, installments, fees } = details;
 
-export function calculateFinalAmount(simulation: ISimulation): number {
-  const fixedFee = calculateFixedFee(
-    simulation.amountToPay,
-    simulation.fees.fixed
-  );
-  const installmentFee = calculateInstallmentFee(
-    simulation.installmentAmount,
-    simulation.installments,
-    simulation.fees.installments
-  );
-  return simulation.amountToPay + fixedFee + installmentFee;
+  const fixedFeeAmount = fees.fixed.amount;
+
+  const installmentFeePercentage =
+    installments > 1 ? fees.installments.percentage : 0;
+  const installmentFeeAmount =
+    installments > 1 ? baseAmount * installmentFeePercentage : 0;
+
+  const totalFees = fixedFeeAmount + installmentFeeAmount;
+
+  const amountToPay = baseAmount + totalFees;
+
+  const installmentAmount = amountToPay / installments;
+
+  return {
+    amountToPay,
+    installmentAmount,
+    installments,
+    fees,
+  };
 }

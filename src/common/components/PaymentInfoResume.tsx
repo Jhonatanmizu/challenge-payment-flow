@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 // Components
 import { StyleSheet, View } from "react-native";
-import { actuatedNormalize, calculateFixedFee, formatAmount } from "../utils";
+import { actuatedNormalize, calculatePayment, formatAmount } from "../utils";
 import { Text } from "./Text";
 // Types
 import { ISimulation } from "../types";
@@ -15,20 +15,13 @@ interface Props {
 }
 
 const PaymentInfoResume = ({ simulationResult, amountToTransfer }: Props) => {
-  // TODO Try to fix this logic, because i dont understand yeat how is applied the tax
   const { t } = useTranslation();
-  const amountToPay = simulationResult?.amountToPay;
-  const installmentAmount = simulationResult?.installmentAmount;
-  const installments = simulationResult?.installments;
-  const feesFixed = simulationResult?.fees?.fixed;
-  const feesInstallmentsAmount = simulationResult?.fees?.installments.amount;
-  const feesInstallmentsPercentage =
-    simulationResult?.fees?.installments?.percentage;
-  const fixedFees = calculateFixedFee(100, feesFixed) || 0;
-  const installmentFee = useMemo(() => {
-    const result = feesInstallmentsPercentage * feesInstallmentsAmount;
-    return result;
-  }, [feesInstallmentsAmount, feesInstallmentsPercentage]);
+
+  const { fees } = calculatePayment({
+    baseAmount: amountToTransfer,
+    fees: simulationResult.fees,
+    installments: simulationResult.installments,
+  });
 
   return (
     <View style={styles.container}>
@@ -45,7 +38,7 @@ const PaymentInfoResume = ({ simulationResult, amountToTransfer }: Props) => {
           {t("common.card_tax")}
         </Text>
         <Text variant="subtitleBlack" fontWeight="bold">
-          {fixedFees}
+          {formatAmount(fees.fixed.amount)}
         </Text>
       </View>
       <View style={styles.rowItem}>
@@ -53,7 +46,7 @@ const PaymentInfoResume = ({ simulationResult, amountToTransfer }: Props) => {
           {t("common.installment_tax")}
         </Text>
         <Text variant="subtitleBlack" fontWeight="bold">
-          {installmentFee}
+          {formatAmount(fees.installments.amount)}
         </Text>
       </View>
       <View style={styles.rowItem}>

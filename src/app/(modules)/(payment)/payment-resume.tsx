@@ -11,7 +11,6 @@ import {
 } from "@/src/common/components";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
-
 // Hooks
 import { useTranslation } from "react-i18next";
 import { useAccountStore, usePaymentStore } from "@/src/common/stores";
@@ -50,6 +49,18 @@ const PaymentResume = () => {
       null
     );
   }, [installmentSelectedAmount]);
+
+  const canPay = useMemo(() => {
+    if (installmentSelectedAmount && selectedPaymentId) {
+      return true;
+    }
+
+    if (selectedPaymentId === AMOUNT_IN_ACCOUNT_ID) {
+      return true;
+    }
+
+    return false;
+  }, [selectedPaymentId, installmentSelectedAmount]);
 
   const handleToggleShowInstallmentBottomSheet = () => {
     setShowInstallmentBottomSheet((prevValue) => !prevValue);
@@ -150,7 +161,7 @@ const PaymentResume = () => {
         <Box>{renderAmountToPay()}</Box>
         <RoundedButton
           label={t("common.pay")}
-          disabled={!selectedPaymentId || !installmentSelectedAmount}
+          disabled={!canPay}
           onPress={handleProcessPayment}
         />
       </View>
