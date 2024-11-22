@@ -10,6 +10,9 @@ import { ICard, ISimulation } from "../types";
 import { useTranslation } from "react-i18next";
 // Utils
 import { actuatedNormalize } from "../utils";
+import { Skeleton } from "./Skeleton";
+
+const SKELETONS = Array.from({ length: 12 }, (_, i) => i + 1);
 
 interface Props {
   selectedPaymentId: string;
@@ -76,6 +79,19 @@ const PaymentOptionList = ({
     return <Box height={16} />;
   }, []);
 
+  if (isLoading) {
+    return (
+      <FlatList
+        ListHeaderComponent={renderListHeader}
+        data={SKELETONS}
+        scrollEnabled={false}
+        contentContainerStyle={styles.cardList}
+        ItemSeparatorComponent={renderSeparator}
+        renderItem={() => <Skeleton customStyles={styles.skeletonItem} />}
+      />
+    );
+  }
+
   return (
     <FlatList
       scrollEnabled={false}
@@ -95,5 +111,10 @@ const styles = StyleSheet.create({
   cardList: {
     padding: actuatedNormalize(16),
     paddingBottom: actuatedNormalize(120),
+  },
+  skeletonItem: {
+    width: "100%",
+    height: 56,
+    borderRadius: 8,
   },
 });

@@ -13,7 +13,12 @@ const InitialScreen = () => {
     }, [])
   );
   return (
-    <Box alignItems="center" height="100%" justifyContent="center">
+    <Box
+      alignItems="center"
+      height="100%"
+      justifyContent="center"
+      backgroundColor="main800"
+    >
       <LottieView
         autoPlay
         ref={animation}

@@ -7,6 +7,7 @@ import {
   createShadow,
   formatAmount,
 } from "@/src/common/utils";
+import { Skeleton } from "./Skeleton";
 import { StyleSheet, TouchableOpacity } from "react-native";
 // Theme
 import theme from "@/src/theme";
@@ -17,14 +18,21 @@ interface Props {
   accountValue: number;
   isPaymentSelected: boolean;
   onAccountPress: () => void;
+  isLoading: boolean;
 }
 
 const AccountBalance = ({
   accountValue,
   isPaymentSelected,
   onAccountPress,
+  isLoading,
 }: Props) => {
   const { t } = useTranslation();
+
+  if (isLoading) {
+    return <Skeleton customStyles={styles.skeletonItem} />;
+  }
+
   return (
     <TouchableOpacity style={styles.wrapper} onPress={onAccountPress}>
       <Box rowGap="sm" flexDirection="row" alignItems="center">
@@ -58,5 +66,10 @@ const styles = StyleSheet.create({
     borderRadius: actuatedNormalize(8),
     flexDirection: "row",
     alignItems: "center",
+  },
+  skeletonItem: {
+    width: "100%",
+    height: 56,
+    borderRadius: 8,
   },
 });

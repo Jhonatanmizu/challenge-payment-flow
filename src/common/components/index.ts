@@ -10,3 +10,4 @@ export { InstallmentOption } from "./InstallmentOption";
 export { BottomSheetModal } from "./BottomSheetModal";
 export { InstallmentsBottomSheet } from "./InstallmentsBottomSheet";
 export { PaymentInfoResume } from "./PaymentInfoResume";
+export { Skeleton } from "./Skeleton";

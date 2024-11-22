@@ -7,14 +7,14 @@ import {
   InstallmentsBottomSheet,
   PaymentOptionList,
   RoundedButton,
+  Skeleton,
   Text,
 } from "@/src/common/components";
 import { ScrollView, StyleSheet, View } from "react-native";
-import { ActivityIndicator } from "react-native-paper";
 // Hooks
 import { useTranslation } from "react-i18next";
 import { useAccountStore, usePaymentStore } from "@/src/common/stores";
-import { useRouter } from "expo-router";
+import { useFocusEffect, useRouter } from "expo-router";
 // Theme
 import theme from "@/src/theme";
 // Types
@@ -111,15 +111,17 @@ const PaymentResume = () => {
     );
   }, [installmentSelectedAmount, selectedPaymentId]);
 
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     getAccount();
-  //   }, [])
-  // );
+  const loadAccountAndSimulations = async () => {
+    const dataFunctions = [getAccount, getSimulations];
+    const promises = dataFunctions.map((d) => d());
+    await Promise.all(promises);
+  };
 
-  if (isLoadingAccount) {
-    return <ActivityIndicator color={theme.colors.backgroundContrast} />;
-  }
+  useFocusEffect(
+    useCallback(() => {
+      loadAccountAndSimulations();
+    }, [])
+  );
 
   return (
     <View style={styles.container}>
@@ -138,6 +140,7 @@ const PaymentResume = () => {
             {t("common.midway_account")}
           </Text>
           <AccountBalance
+            isLoading={isLoadingAccount}
             accountValue={2000}
             isPaymentSelected={selectedPaymentId === AMOUNT_IN_ACCOUNT_ID}
             onAccountPress={() => {
@@ -152,7 +155,7 @@ const PaymentResume = () => {
           items={accountCards}
           handlePickInstallments={handleToggleShowInstallmentBottomSheet}
           handleSelectPayment={handleSelectPayment}
-          isLoading={isLoadingAccount}
+          isLoading={isLoadingSimulations}
           selectedPaymentId={selectedPaymentId}
           simulationResult={simulationResult}
         />
