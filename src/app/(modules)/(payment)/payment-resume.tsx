@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 // Components
 import {
   AccountBalance,
@@ -27,6 +27,8 @@ import {
   formatAmount,
   SCREEN_HEIGHT,
 } from "@/src/common/utils";
+
+const AMOUNT_IN_ACCOUNT_ID = "-1";
 
 const PaymentResume = () => {
   const { t } = useTranslation();
@@ -121,20 +123,21 @@ const PaymentResume = () => {
           </Text>
         </View>
         <View style={styles.contentWrapper}>
-          <Text variant="titleBlack" fontWeight="bold">
+          <Text variant="titleBlack" fontWeight="700">
             {t("common.midway_account")}
           </Text>
           <AccountBalance
             accountValue={2000}
-            isPaymentSelected={selectedPaymentId === "-1"}
+            isPaymentSelected={selectedPaymentId === AMOUNT_IN_ACCOUNT_ID}
             onAccountPress={() => {
-              setSelectedPaymentId("-1");
+              setSelectedPaymentId(AMOUNT_IN_ACCOUNT_ID);
               setInstallmentSelectedAmount(null);
             }}
           />
         </View>
 
         <PaymentOptionList
+          amountToTransfer={payment.amount}
           items={accountCards}
           handlePickInstallments={handleToggleShowInstallmentBottomSheet}
           handleSelectPayment={handleSelectPayment}
@@ -174,7 +177,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   contentWrapper: {
-    rowGap: actuatedNormalize(16),
+    rowGap: actuatedNormalize(32),
     padding: actuatedNormalize(16),
   },
   cardList: {

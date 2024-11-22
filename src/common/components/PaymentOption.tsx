@@ -28,6 +28,7 @@ interface Props {
   onPaymentPress: () => void;
   onPickInstallments: () => void;
   simulationResult: ISimulation | null;
+  amountToTransfer: number;
 }
 
 const PaymentOption = ({
@@ -38,6 +39,7 @@ const PaymentOption = ({
   onPaymentPress,
   onPickInstallments,
   simulationResult,
+  amountToTransfer,
 }: Props) => {
   const { t } = useTranslation();
   return (
@@ -50,7 +52,7 @@ const PaymentOption = ({
             status={isPaymentSelected ? "checked" : "unchecked"}
             onPress={onPaymentPress}
           />
-          <Box>
+          <Box rowGap="xs">
             <Box flexDirection="row" alignItems="center" gap="sm">
               <Image source={cardBrandImage} resizeMode="cover" />
               <Text variant="titleBlack" color="main700" fontWeight="700">
@@ -70,7 +72,10 @@ const PaymentOption = ({
         />
       )}
       {!!simulationResult && isPaymentSelected && (
-        <PaymentInfoResume simulationResult={simulationResult} />
+        <PaymentInfoResume
+          amountToTransfer={amountToTransfer}
+          simulationResult={simulationResult}
+        />
       )}
     </Box>
   );
@@ -82,7 +87,7 @@ const styles = StyleSheet.create({
   wrapper: {
     ...createShadow(3),
     backgroundColor: theme.colors.whiteAlt,
-    padding: actuatedNormalize(12),
+    paddingVertical: actuatedNormalize(12),
     paddingHorizontal: actuatedNormalize(16),
     borderRadius: actuatedNormalize(8),
     flexDirection: "row",

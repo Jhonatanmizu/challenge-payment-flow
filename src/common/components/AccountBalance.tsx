@@ -34,7 +34,7 @@ const AccountBalance = ({
           status={isPaymentSelected ? "checked" : "unchecked"}
           onPress={onAccountPress}
         />
-        <Box>
+        <Box rowGap="xs">
           <Text variant="titleBlack" color="main700" fontWeight="700">
             {t("common.account_balance")}
           </Text>
@@ -51,9 +51,9 @@ export { AccountBalance };
 
 const styles = StyleSheet.create({
   wrapper: {
-    ...createShadow(10),
+    ...createShadow(10, "all", theme.colors.grey100),
     backgroundColor: theme.colors.grey100,
-    padding: actuatedNormalize(12),
+    paddingVertical: actuatedNormalize(12),
     paddingHorizontal: actuatedNormalize(16),
     borderRadius: actuatedNormalize(8),
     flexDirection: "row",

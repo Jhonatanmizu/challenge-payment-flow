@@ -5,12 +5,15 @@ import { Image, StyleSheet } from "react-native";
 // Translation
 import { useTranslation } from "react-i18next";
 // Utils
-import { formatDateToLocaleBrazil } from "@/src/common/utils";
+import { formatAmount, formatDateToLocaleBrazil } from "@/src/common/utils";
 import { useRouter } from "expo-router";
+import { usePaymentStore } from "@/src/common/stores";
+import { useShallow } from "zustand/react/shallow";
 
 const PaymentSuccess = () => {
   const { t } = useTranslation();
   const router = useRouter();
+  const payment = usePaymentStore(useShallow((state) => state.payment));
   const paymentDate = formatDateToLocaleBrazil(new Date(Date.now()));
 
   const handleClose = () => {
@@ -44,7 +47,7 @@ const PaymentSuccess = () => {
           {t("common.to")}
         </Text>
         <Text variant="titleBlack" fontWeight="bold" color="main800">
-          Maria da Silva Maria da Silva
+          {payment.receiver.name}
         </Text>
         <Box flexDirection="row" columnGap="lg">
           <Box alignItems="center">
@@ -52,7 +55,7 @@ const PaymentSuccess = () => {
               {t("common.value")}
             </Text>
             <Text variant="titleBlack" fontWeight="bold" color="main800">
-              R$100,00
+              {formatAmount(payment.amount)}
             </Text>
           </Box>
           <Box alignItems="center">

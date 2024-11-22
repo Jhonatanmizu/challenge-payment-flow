@@ -18,6 +18,7 @@ interface Props {
   isLoading: boolean;
   items: ICard[];
   simulationResult: ISimulation | null;
+  amountToTransfer: number;
 }
 
 const PaymentOptionList = ({
@@ -27,6 +28,7 @@ const PaymentOptionList = ({
   handleSelectPayment,
   handlePickInstallments,
   simulationResult,
+  amountToTransfer,
 }: Props) => {
   const { t } = useTranslation();
 
@@ -55,6 +57,7 @@ const PaymentOptionList = ({
           cardNumber={cardNumber}
           cardBrand={cardBrand}
           simulationResult={simulationResult}
+          amountToTransfer={amountToTransfer}
         />
       );
     },
@@ -65,6 +68,7 @@ const PaymentOptionList = ({
       simulationResult?.installments,
       simulationResult?.installmentAmount,
       simulationResult?.amountToPay,
+      amountToTransfer,
     ]
   );
 

@@ -11,9 +11,10 @@ import { useTranslation } from "react-i18next";
 
 interface Props {
   simulationResult: ISimulation;
+  amountToTransfer: number;
 }
 
-const PaymentInfoResume = ({ simulationResult }: Props) => {
+const PaymentInfoResume = ({ simulationResult, amountToTransfer }: Props) => {
   // TODO Try to fix this logic, because i dont understand yeat how is applied the tax
   const { t } = useTranslation();
   const amountToPay = simulationResult?.amountToPay;
@@ -36,7 +37,7 @@ const PaymentInfoResume = ({ simulationResult }: Props) => {
           {t("common.amount_to_transfer")}
         </Text>
         <Text variant="subtitleBlack" fontWeight="bold">
-          {formatAmount(amountToPay)}
+          {formatAmount(amountToTransfer)}
         </Text>
       </View>
       <View style={styles.rowItem}>

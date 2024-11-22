@@ -38,16 +38,20 @@ const InstallmentsBottomSheet = ({
 
   const renderBottomSheetHeader = useCallback(() => {
     return (
-      <Box
-        flexDirection="row"
-        alignItems="center"
-        justifyContent="space-between"
-        mb="xl"
-      >
-        <Text variant="titleBlack" fontWeight="bold">
-          {t("payment.payment_installments")}
+      <Box rowGap="xl" mb="xl">
+        <Box
+          flexDirection="row"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <Text variant="headerBlack" fontWeight="bold">
+            {t("payment.payment_installments")}
+          </Text>
+          <CloseButton onClosePress={onClose} />
+        </Box>
+        <Text variant="titleBlack" fontWeight="500">
+          {t("common.modal_placeholder")}
         </Text>
-        <CloseButton onClosePress={onClose} />
       </Box>
     );
   }, []);

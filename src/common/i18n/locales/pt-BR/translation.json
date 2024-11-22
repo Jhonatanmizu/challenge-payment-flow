@@ -25,6 +25,7 @@
     "amount_to_transfer": "Valor a transferir",
     "card_tax": "Taxa do cartão",
     "installment_tax": "Taxa de parcelamento",
-    "amount_to_transfer_with_tax": " Valor a transferir + taxas"
+    "amount_to_transfer_with_tax": " Valor a transferir + taxas",
+    "modal_placeholder": "O destinatário receberá à vista e você pagará parcelado."
   }
 }
