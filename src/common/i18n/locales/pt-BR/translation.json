@@ -21,6 +21,10 @@
     "value": "Valor",
     "date": "Data",
     "pick_installments": "Escolher parcelas",
-    "confirm": "Confirmar"
+    "confirm": "Confirmar",
+    "amount_to_transfer": "Valor a transferir",
+    "card_tax": "Taxa do cartão",
+    "installment_tax": "Taxa de parcelamento",
+    "amount_to_transfer_with_tax": " Valor a transferir + taxas"
   }
 }

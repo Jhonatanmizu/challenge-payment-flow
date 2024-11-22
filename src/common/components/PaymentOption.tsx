@@ -18,6 +18,7 @@ import { useTranslation } from "react-i18next";
 import { actuatedNormalize, createShadow } from "@/src/common/utils";
 // Types
 import { ISimulation } from "../types";
+import { PaymentInfoResume } from "./PaymentInfoResume";
 
 interface Props {
   cardBrand: string;
@@ -67,6 +68,9 @@ const PaymentOption = ({
           onPickInstallments={onPickInstallments}
           simulationResult={simulationResult}
         />
+      )}
+      {!!simulationResult && isPaymentSelected && (
+        <PaymentInfoResume simulationResult={simulationResult} />
       )}
     </Box>
   );

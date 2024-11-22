@@ -9,3 +9,4 @@ export { CloseButton } from "./CloseButton";
 export { InstallmentOption } from "./InstallmentOption";
 export { BottomSheetModal } from "./BottomSheetModal";
 export { InstallmentsBottomSheet } from "./InstallmentsBottomSheet";
+export { PaymentInfoResume } from "./PaymentInfoResume";
