@@ -7,3 +7,5 @@ export { HeaderWithGoBack } from "./HeaderWithGoBack";
 export { AccountBalance } from "./AccountBalance";
 export { CloseButton } from "./CloseButton";
 export { InstallmentOption } from "./InstallmentOption";
+export { BottomSheetModal } from "./BottomSheetModal";
+export { InstallmentsBottomSheet } from "./InstallmentsBottomSheet";
