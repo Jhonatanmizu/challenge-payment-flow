@@ -5,7 +5,7 @@ import { Box } from "./Box";
 import { PaymentOption } from "./PaymentOption";
 import { Text } from "./Text";
 // Types
-import { ICard } from "../types";
+import { ICard, ISimulation } from "../types";
 // i18n
 import { useTranslation } from "react-i18next";
 // Utils
@@ -17,6 +17,7 @@ interface Props {
   handlePickInstallments: () => void;
   isLoading: boolean;
   items: ICard[];
+  simulationResult: ISimulation | null;
 }
 
 const PaymentOptionList = ({
@@ -25,6 +26,7 @@ const PaymentOptionList = ({
   selectedPaymentId,
   handleSelectPayment,
   handlePickInstallments,
+  simulationResult,
 }: Props) => {
   const { t } = useTranslation();
 
@@ -52,10 +54,18 @@ const PaymentOptionList = ({
           cardBrandImage={cardBrandImage}
           cardNumber={cardNumber}
           cardBrand={cardBrand}
+          simulationResult={simulationResult}
         />
       );
     },
-    [isLoading, items.length, selectedPaymentId]
+    [
+      isLoading,
+      items.length,
+      selectedPaymentId,
+      simulationResult?.installments,
+      simulationResult?.installmentAmount,
+      simulationResult?.amountToPay,
+    ]
   );
 
   const renderSeparator = useCallback(() => {

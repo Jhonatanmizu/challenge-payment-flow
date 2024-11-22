@@ -16,6 +16,8 @@ import theme from "@/src/theme";
 import { useTranslation } from "react-i18next";
 // Utils
 import { actuatedNormalize, createShadow } from "@/src/common/utils";
+// Types
+import { ISimulation } from "../types";
 
 interface Props {
   cardBrand: string;
@@ -24,6 +26,7 @@ interface Props {
   isPaymentSelected: boolean;
   onPaymentPress: () => void;
   onPickInstallments: () => void;
+  simulationResult: ISimulation | null;
 }
 
 const PaymentOption = ({
@@ -33,6 +36,7 @@ const PaymentOption = ({
   isPaymentSelected,
   onPaymentPress,
   onPickInstallments,
+  simulationResult,
 }: Props) => {
   const { t } = useTranslation();
   return (
@@ -59,7 +63,10 @@ const PaymentOption = ({
         </Box>
       </TouchableOpacity>
       {isPaymentSelected && (
-        <PickInstallments onPickInstallments={onPickInstallments} />
+        <PickInstallments
+          onPickInstallments={onPickInstallments}
+          simulationResult={simulationResult}
+        />
       )}
     </Box>
   );

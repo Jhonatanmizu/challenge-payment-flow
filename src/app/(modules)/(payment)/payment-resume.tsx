@@ -3,28 +3,24 @@ import React, { useCallback, useMemo, useRef, useState } from "react";
 import {
   AccountBalance,
   Box,
-  CloseButton,
   HeaderWithGoBack,
-  InstallmentOption,
-  PaymentOption,
+  InstallmentsBottomSheet,
   PaymentOptionList,
   RoundedButton,
   Text,
 } from "@/src/common/components";
-import { FlatList, ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
-import BottomSheet, {
-  BottomSheetFlashList,
-  BottomSheetFlatList,
-  BottomSheetView,
-} from "@gorhom/bottom-sheet";
+
 // Hooks
 import { useTranslation } from "react-i18next";
 import { useAccountStore, usePaymentStore } from "@/src/common/stores";
-import { useFocusEffect, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 // Theme
 import theme from "@/src/theme";
-import { ICard, ISimulation } from "@/src/common/types";
+// Types
+import { ISimulation } from "@/src/common/types";
+// Utils
 import {
   actuatedNormalize,
   createShadow,
@@ -33,7 +29,6 @@ import {
 } from "@/src/common/utils";
 
 const PaymentResume = () => {
-  const bottomSheetRef = useRef<BottomSheet>(null);
   const { t } = useTranslation();
   const { getAccount, isLoadingAccount, account } = useAccountStore();
   const { getSimulations, isLoadingSimulations, payment } = usePaymentStore();
@@ -41,24 +36,21 @@ const PaymentResume = () => {
   const router = useRouter();
   const accountCards = account.cards;
   const [selectedPaymentId, setSelectedPaymentId] = useState<string>("");
+  const [showInstallmentBottomSheet, setShowInstallmentBottomSheet] =
+    useState(false);
   const [installmentSelectedAmount, setInstallmentSelectedAmount] = useState<
     number | null
   >(null);
   const simulationResult = useMemo(() => {
     if (!installmentSelectedAmount) return null;
-    return simulations.find(
-      (s) => s.installments === installmentSelectedAmount
+    return (
+      simulations.find((s) => s.installments === installmentSelectedAmount) ||
+      null
     );
   }, [installmentSelectedAmount]);
 
-  const bottomSheetSnapPoints = useMemo(() => ["25%", "50%", "90%"], []);
-
-  const handlePickInstallments = () => {
-    bottomSheetRef.current?.expand();
-  };
-
-  const handleCloseBottomSheet = () => {
-    bottomSheetRef.current?.close();
+  const handleToggleShowInstallmentBottomSheet = () => {
+    setShowInstallmentBottomSheet((prevValue) => !prevValue);
   };
 
   const handleSelectPayment = (paymentId: string) => {
@@ -77,39 +69,6 @@ const PaymentResume = () => {
   const handleSelectSimulation = (simulation: ISimulation) => {
     setInstallmentSelectedAmount(simulation.installments);
   };
-
-  const renderBottomSheetHeader = useCallback(() => {
-    return (
-      <Box
-        flexDirection="row"
-        alignItems="center"
-        justifyContent="space-between"
-        mb="xl"
-      >
-        <Text variant="titleBlack" fontWeight="bold">
-          {t("payment.payment_installments")}
-        </Text>
-        <CloseButton onClosePress={handleCloseBottomSheet} />
-      </Box>
-    );
-  }, []);
-
-  const renderInstallmentItem = useCallback(
-    ({ item }: { item: ISimulation }) => {
-      const installmentAmount = item.installmentAmount;
-      const installments = item.installments;
-      const isSelected = installmentSelectedAmount === installments;
-      return (
-        <InstallmentOption
-          installments={installments}
-          installmentAmount={installmentAmount}
-          isInstallmentSelected={isSelected}
-          onPickInstallment={() => handleSelectSimulation(item)}
-        />
-      );
-    },
-    [installmentSelectedAmount]
-  );
 
   const renderAmountToPay = useCallback(() => {
     return (
@@ -168,53 +127,38 @@ const PaymentResume = () => {
           <AccountBalance
             accountValue={2000}
             isPaymentSelected={selectedPaymentId === "-1"}
-            onAccountPress={() => setSelectedPaymentId("-1")}
+            onAccountPress={() => {
+              setSelectedPaymentId("-1");
+              setInstallmentSelectedAmount(null);
+            }}
           />
         </View>
 
         <PaymentOptionList
           items={accountCards}
-          handlePickInstallments={handlePickInstallments}
+          handlePickInstallments={handleToggleShowInstallmentBottomSheet}
           handleSelectPayment={handleSelectPayment}
           isLoading={isLoadingAccount}
           selectedPaymentId={selectedPaymentId}
+          simulationResult={simulationResult}
         />
       </ScrollView>
       <View style={styles.bottomContainer}>
         <Box>{renderAmountToPay()}</Box>
         <RoundedButton
           label={t("common.pay")}
-          disabled={!selectedPaymentId}
+          disabled={!selectedPaymentId || !installmentSelectedAmount}
           onPress={handleProcessPayment}
         />
       </View>
-      {/* <BottomSheet
-        index={-1}
-        ref={bottomSheetRef}
-        enablePanDownToClose
-        snapPoints={bottomSheetSnapPoints}
-      >
-        <BottomSheetView style={styles.bottomSheetContent}>
-          <BottomSheetFlashList
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={{
-              padding: 8,
-            }}
-            estimatedItemSize={74}
-            ListHeaderComponent={renderBottomSheetHeader}
-            data={simulations}
-            ItemSeparatorComponent={renderSeparator}
-            renderItem={renderInstallmentItem}
-          />
-        </BottomSheetView>
-        <View style={styles.bottomContainer}>
-          <Box>{renderAmountToPay()}</Box>
-          <RoundedButton
-            label={t("common.confirm")}
-            onPress={handleCloseBottomSheet}
-          />
-        </View>
-      </BottomSheet> */}
+      <InstallmentsBottomSheet
+        onClose={handleToggleShowInstallmentBottomSheet}
+        visible={showInstallmentBottomSheet}
+        handleSelectSimulation={handleSelectSimulation}
+        renderAmountToPay={renderAmountToPay}
+        simulations={simulations}
+        installmentSelectedAmount={installmentSelectedAmount}
+      />
     </View>
   );
 };
