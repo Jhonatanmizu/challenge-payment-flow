@@ -1,50 +1,157 @@
-# Welcome to your Expo app 👋
+# **Challenge: Payment Flow 💰**
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## **Goal**
 
-## Get started
+The purpose of this app is to solve a challenge involving the implementation of a payment flow. It demonstrates the handling of various stages of a payment process, including selecting a payment method, applying installments, and displaying the payment results.
 
-1. Install dependencies
+---
 
+## **Routes**
+
+The app contains the following key routes:
+
+- **Payment Resume**: Displays a summary of the payment details.
+- **Payment Success**: Shows a success screen upon completing a payment.
+- **Processing Payment**: Indicates that the payment is being processed.
+
+---
+
+## **Features**
+
+- Select a payment method.
+- Apply and configure installment options for payments.
+
+---
+
+### Core Libraries
+
+- **React**: A library for building user interfaces.
+- **React Native**: A framework for building native apps using React.
+- **Expo**: A framework and platform for universal React applications.
+
+### Navigation
+
+- **@expo/router**: Navigation for bottom tab bars in React Native.
+
+### State Management
+
+- **Zustand**: A small, fast, and scalable state management library.
+
+### UI Components and Animations
+
+- **@expo/vector-icons**: Icons for React Native projects.
+- **react-native-paper**: UI library with components adhering to the Material Design guidelines.
+- **lottie-react-native**: For rendering Lottie animations.
+- **react-native-animatable**: For creating animations.
+
+### Styling
+
+- **@shopify/restyle**: A utility library for styling React Native components.
+
+### Localization
+
+- **i18next**: Internationalization framework.
+- **react-i18next**: React bindings for i18next.
+- **expo-localization**: Provides localization information.
+
+---
+
+## **Screenshots**
+
+![Payment Flow Screenshot]()
+
+---
+
+## **Getting Started**
+
+### **Prerequisites**
+
+To run this project, you will need:
+
+- A drink (highly recommend coffee ☕ for best performance)
+- [Node.js](https://nodejs.org/)
+- A code editor (recommendation: [Visual Studio Code](https://code.visualstudio.com/))
+- The Expo Go app installed on your mobile device for testing on a physical device.
+- [Android Studio](https://developer.android.com/studio) (optional, if you want to test the app on an emulator).
+
+---
+
+### **How to Run the Project**
+
+1. Clone this repository to your local machine.
+2. Install the project dependencies:
    ```bash
-   npm install
+   yarn install
    ```
-
-2. Start the app
-
+3. Start the project with Expo:
    ```bash
-    npx expo start
+   npx expo start
    ```
+4. Use Expo Go on your mobile device or connect an emulator to test the app.
 
-In the output, you'll find options to open the app in a
+---
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## **Contributing**
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+Want to contribute? Here's how you can help:
 
-## Get a fresh project
+1. Create a new branch for your changes:
+   ```bash
+   git checkout -b your-branch-name
+   ```
+2. Implement your changes and commit them with a meaningful message:
+   ```bash
+   git commit -m ":sparkles: Your message here"
+   ```
+3. Push your branch to the remote repository:
+   ```bash
+   git push
+   ```
+4. Open a pull request and request a code review.
 
-When you're ready, run:
+---
 
-```bash
-npm run reset-project
-```
+## **Git Workflow**
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### Common Commands:
 
-## Learn more
+- **Create a new branch**:
+  ```bash
+  git checkout -b your-branch-name
+  ```
+- **Switch to a branch**:
+  ```bash
+  git checkout branch-name
+  ```
+- **Commit your changes**:
+  ```bash
+  git commit -m "Your commit message"
+  ```
+- **Push changes to remote**:
+  ```bash
+  git push
+  ```
+- **Pull updates from remote**:
+  ```bash
+  git pull
+  ```
 
-To learn more about developing your project with Expo, look at the following resources:
+---
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## **Development Setup**
 
-## Join the community
+Need help setting up your React Native environment? Check out [this guide](https://react-native.rocketseat.dev) for step-by-step instructions.
 
-Join our community of developers creating universal apps.
+---
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## **Starting a Pull Request**
+
+1. Create a branch based on the `main` branch:
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
+2. Make your changes and commit to your branch.
+3. Push your branch to the remote repository.
+4. Create a pull request and ensure it is reviewed before merging.
+
+---
